@@ -4,6 +4,63 @@
              xmlns:local="clr-namespace:PdfFastReader"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key="RobotoLight">
+                <Setter Property="TextElement.FontFamily"
+                    Value="/Resources/Fonts/#Roboto Light"/>
+            </Style>
+            <Style x:Key="RobotoRegular">
+                <Setter Property="TextElement.FontFamily"
+                    Value="/Resources/Fonts/#Roboto"/>
+            </Style>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="TextElement.FontFamily"
+                    Value="/Resources/Fonts/#Roboto Light"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="1">
+                                <ContentPresenter HorizontalAlignment="Left"  VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#CC4CAF50"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="actionButton" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="TextElement.FontFamily"
+                    Value="/Resources/Fonts/#Roboto Light"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="1">
+                                <ContentPresenter HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="#4CFFFFFF"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+
+
+
+            <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Green.xaml" />
+                    <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </Application.Resources>
 </Application>

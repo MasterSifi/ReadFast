@@ -1,63 +1,99 @@
-﻿<Window x:Class="PdfFastReader.MainWindow"
+﻿<Window x:Name="mainWindow" x:Class="PdfFastReader.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PdfFastReader"
         mc:Ignorable="d"
-        Title="ReadFast" Height="500" Width="800" Background="#FF323232" VerticalAlignment="Center" HorizontalAlignment="Center">
-    <Grid x:Name="mainGrid" Background="#FF1B1B1B" Margin="0,0,2,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="11*"/>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="418*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="323*"/>
-            <ColumnDefinition Width="72*"/>
-        </Grid.ColumnDefinitions>
+        Title="ReadFast" Height="500" Width="800" WindowStyle="None" Background="#FFFAFAFA"  >
+    <Viewbox>
+        <StackPanel x:Name="mainPanel" Height="500" Margin="0,0,1,-8" Orientation="Horizontal">
+            <StackPanel Height="500" Width="554" Background="#00000000">
+                <StackPanel x:Name="namePanel" Height="60" Background="#FF4CAF50">
+                    <TextBlock x:Name="nameText" TextWrapping="Wrap" Style="{StaticResource RobotoLight}" Text="ReadFast" Height="58" TextAlignment="Center" FontSize="42" Foreground="#FFFAFAFA" />
+                </StackPanel>
+                <TextBlock x:Name="_output" TextWrapping="Wrap" Style="{StaticResource RobotoRegular}" Height="440" TextAlignment="Center" Background="#00000000"/>
+            </StackPanel>
 
-        <Button x:Name="start" Content="Start" Height="37" Margin="0,116,26,0" Width="80" Click="start_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2" Background="#006D6D6D" FontSize="22" Foreground="#E2FFFFFF" FontFamily="Segoe UI Semibold" BorderBrush="#006D6D6D"/>
-        <Slider x:Name="_tickSpeed" HorizontalAlignment="Right" Height="23" Margin="0,227,10,0" VerticalAlignment="Top" Width="104" Minimum="1" Maximum="20" Value="10" IsSnapToTickEnabled="True" TickFrequency="1" ValueChanged="tickSpeed_ValueChanged" Grid.Column="1" Grid.Row="2" Foreground="#FF6D6D6D" RenderTransformOrigin="0.5,0.5">
-            <Slider.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="180.069"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Slider.RenderTransform>
-        </Slider>
-        <Slider x:Name="_numberOfWords" HorizontalAlignment="Right" Height="26" Margin="0,291,10,0" VerticalAlignment="Top" Width="104" Minimum="1" Maximum="20" Value="2" IsSnapToTickEnabled="True" TickFrequency="1" ValueChanged="numberOfWords_ValueChanged" Grid.Column="1" RenderTransformOrigin="0.5,0.5" Grid.Row="2" Background="#00000000" Foreground="#FF6D6D6D">
-            <Slider.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-359.049"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Slider.RenderTransform>
-        </Slider>
-        <TextBlock x:Name="_output" Margin="0,0,0,5" TextWrapping="Wrap" Foreground="Snow" FontSize="16" TextAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.Row="2" FontFamily="Segoe UI Semibold" Cursor="None">
-            <TextBlock.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </TextBlock.RenderTransform>
-        </TextBlock>
-        <Button x:Name="_open" Content="Load" Height="38" Margin="0,29,26,0" Width="80" Click="_open_Click" Background="#006D6D6D" Grid.Column="1" MinWidth="80" MinHeight="38" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2" FontSize="22" FontFamily="Segoe UI Semibold" Foreground="White" BorderBrush="#006D6D6D"/>
-        <Label x:Name="speedLabel" Content="Speed" Grid.Column="1" HorizontalAlignment="Right" Height="40" Margin="0,187,26,0" VerticalAlignment="Top" Width="80" FontSize="24" Background="#00000000" Foreground="White" Grid.Row="2"/>
-        <Label x:Name="wordsLabel" Content="Words" Grid.Column="1" HorizontalAlignment="Right" Height="37" Margin="0,258,26,0" VerticalAlignment="Top" Width="80" Foreground="White" FontSize="24" Grid.Row="2"/>
-        <Grid x:Name="titleGrid" Grid.ColumnSpan="2" Height="39" Width="790" Background="#FF424242" Grid.Row="1">
-            <TextBlock x:Name="titleText" Height="39" TextWrapping="Wrap" Text="ReadFast" Width="790" Foreground="White" TextAlignment="Center" FontFamily="Segoe UI Semibold" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <StackPanel Margin="0,0,0,4" Background="#00000000">
+                <StackPanel x:Name="iconPanel" Height="60" Background="#FF4CAF50">
+                    <Grid x:Name="buttonsGrid" Height="60">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <materialDesign:PackIcon x:Name="minimizeIcon" Kind="WindowMinimize" Width="40" Height="40" Margin="20,20,0,0" Foreground="#FFFAFAFA" />
+                        <materialDesign:PackIcon x:Name="maximizeIcon" Kind="WindowMaximize" Width="40" Height="40" Grid.Column="1" Margin="20,20,0,0" Foreground="#FFFAFAFA" />
+                        <materialDesign:PackIcon x:Name="closeIcon" Kind="Close" Width="40" Height="40" Grid.Column="2" Margin="20,20,0,0" Foreground="#FFFAFAFA" />
 
-        </Grid>
-        <Button x:Name="nightMode" Content="NightMode" Grid.Column="1" HorizontalAlignment="Right" Height="27" Margin="0,328,10,0" Grid.Row="2" VerticalAlignment="Top" Width="96" Foreground="White" Background="#006D6D6D" FontFamily="Segoe UI Semibold"  BorderBrush="#006D6D6D" Click="nightMode_Click" />
+                        <Button x:Name="minimizeButton" Style="{StaticResource actionButton}"  Width="79" Height="60" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                        <Button x:Name="maximizeButton" Style="{StaticResource actionButton}"  Grid.Column="1" Width="78" Height="60"  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                        <Button x:Name="closeButton" Style="{StaticResource actionButton}"  Grid.Column="2" Width="79" Height="60" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel Background="#00000000" >
+                    <Button x:Name="startButton" HorizontalAlignment="Stretch" Content="      Start" Click="start_Click" Height="50" FontSize="14.5" />
+
+                    <Expander x:Name="loadExpander" HorizontalAlignment="Stretch" Header="Load" Background="#00000000" >
+                        <StackPanel>
+                            <Button x:Name="loadButton"  HorizontalAlignment="Stretch" Content="      From file" Click="loadButton_Click" Height="40" FontSize="15" />
 
 
-    </Grid>
+
+                        </StackPanel>
+
+
+                    </Expander>
+
+                    <Expander x:Name="settingsExpander" Header="Settings" Background="#00000000">
+                        <StackPanel>
+                            <TextBlock x:Name="speedText" Style="{StaticResource RobotoLight}" Text="Speed" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                            <Slider
+                            x:Name="_tickSpeed"
+	                        Width="150"
+	                        Maximum="50"
+	                        Minimum="1"
+	                        Orientation="Horizontal"
+	                        TickFrequency="1"
+	                        Value="25" RenderTransformOrigin="0.5,0.5" ValueChanged="_tickSpeed_ValueChanged" >
+                                <Slider.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                                        <SkewTransform AngleY="0" AngleX="0"/>
+                                        <RotateTransform Angle="0"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Slider.RenderTransform>
+                            </Slider>
+                            <TextBlock x:Name="numberOfWordsText" Style="{StaticResource RobotoLight}" Text="Number of words" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                            <Slider
+                            x:Name="_numberOfWords"
+	                        Width="150"
+	                        Maximum="20"
+	                        Minimum="1"
+	                        Orientation="Horizontal"
+	                        TickFrequency="1"
+	                        Value="2" ValueChanged="_numberOfWords_ValueChanged" />
+                            <TextBlock x:Name="fontSizeText" Style="{StaticResource RobotoLight}" Text="Font size" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                            <Slider
+                            x:Name="_fontSize"
+	                        Width="150"
+	                        Maximum="70"
+	                        Minimum="10"
+	                        Orientation="Horizontal"
+	                        TickFrequency="1"
+	                        Value="20" ValueChanged="_fontSize_ValueChanged" />
+                            <TextBlock x:Name="nightModeText" Style="{StaticResource RobotoLight}" Text="NightMode" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                            <ToggleButton x:Name="nightMode" Height="40" Click="nightMode_Click"/>
+                        </StackPanel>
+
+                    </Expander>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Viewbox>
+
 
 </Window>

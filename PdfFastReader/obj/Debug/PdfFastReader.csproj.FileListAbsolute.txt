@@ -47,3 +47,9 @@ K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\bin\Debug\PdfFastReader.exe.m
 K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\bin\Debug\PdfFastReader.application
 K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\obj\Debug\PdfFastReader.exe.manifest
 K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\obj\Debug\PdfFastReader.application
+K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\obj\Debug\PdfFastReader.csprojResolveAssemblyReference.cache
+K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\bin\Debug\MaterialDesignColors.dll
+K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\bin\Debug\MaterialDesignThemes.Wpf.dll
+K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\bin\Debug\MaterialDesignColors.pdb
+K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\bin\Debug\MaterialDesignThemes.Wpf.pdb
+K:\Repozytorium_Studia\PdfFastReader\PdfFastReader\bin\Debug\MaterialDesignThemes.Wpf.xml

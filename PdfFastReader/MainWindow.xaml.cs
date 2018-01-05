@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using TikaOnDotNet.TextExtraction;
 using System.Timers;
 using System.Windows.Threading;
-
+using System.IO;
 
 namespace PdfFastReader
 {
@@ -38,10 +38,15 @@ namespace PdfFastReader
         string[] output;
         public MainWindow()
         {
+            tickSpeed = 5;
+            numberOfWords = 2;
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0,0,0,0,500);
             timer.Tick += OnTimedEvent;
             InitializeComponent();
+            minimizeButton.Click += (s, e) => WindowState = WindowState.Minimized;
+            maximizeButton.Click += (s, e) => WindowState = WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
+            closeButton.Click += (s, e) => Close();
         }
 
         private void OnTimedEvent(object sender, EventArgs e)
@@ -86,23 +91,23 @@ namespace PdfFastReader
         {
             if (path != null)
             {
-                
+
                 startReader = !startReader;
                 if (!startReader)
                 {
-                    start.Content = "Start";
+                    startButton.Content = "      Start";
                     timer.Stop();
                 }
                 else
                 {
 
                     timer.Start();
-                    start.Content = "Stop" ;
+                    startButton.Content = "      Stop";
                 }
-                if(_output.Text=="The End. ")
+                if (_output.Text == "The End. ")
                 {
                     i = 0;
-                   
+
                 }
             }
             else
@@ -111,20 +116,67 @@ namespace PdfFastReader
             }
         }
 
-        private void numberOfWords_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+
+
+
+    
+
+
+        private void ChangeUIColor()
         {
-            numberOfWords = Convert.ToInt32(_numberOfWords.Value);
+            night = !night;
+            //#424242-gray
+            //#1b1b1b-dark
+            //#6d6d6d-light
+            //#ffffff white
+            //#000000 black
+            //#7da453 dark
+            //#aed581 light
+            //#f1f8e9 white
+            if (!night)
+            {
+                mainWindow.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                _output.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
+                speedText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
+                numberOfWordsText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
+                fontSizeText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
+                nightModeText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
+                startButton.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
+                loadButton.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
+                loadExpander.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
+                settingsExpander.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
+                minimizeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                maximizeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                closeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                nameText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+            }
+            else
+            {
+                mainWindow.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
+                _output.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                speedText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                numberOfWordsText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                fontSizeText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                nightModeText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                startButton.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                loadButton.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                loadExpander.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                settingsExpander.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                minimizeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
+                maximizeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
+                closeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
+                nameText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
+
+            }
         }
 
-        private void tickSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            tickSpeed = Convert.ToInt32(_tickSpeed.Value);
-            timer.Interval = new TimeSpan(0,0,0,0,tickSpeed * 50);
-        }
 
-        private void _open_Click(object sender, RoutedEventArgs e)
+       
+
+
+        private void loadButton_Click(object sender, RoutedEventArgs e)
         {
-            start.Content = "Start";
+            startButton.Content = "      Start";
             timer.Stop();
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
@@ -137,46 +189,45 @@ namespace PdfFastReader
             }
         }
 
-
-        private void ChangeUIColor()
+        private void saveButton_Click(object sender, RoutedEventArgs e)
         {
-            //#424242-gray
-            //#1b1b1b-dark
-            //#6d6d6d-light
-            //#ffffff white
-            //#000000 black
-            //#7da453 dark
-            //#aed581 light
-            //#f1f8e9 white
-            if (!night)
-            {
-                mainGrid.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1b1b1b"));
-                titleGrid.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
-                titleText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffffff"));
-                _output.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffffff"));
-                _open.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffffff"));
-                start.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffffff"));
-                speedLabel.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffffff"));
-                wordsLabel.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffffff"));
-                nightMode.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffffff"));
-            }
-            else
-            {
-                mainGrid.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#f1f8e9"));
-                titleGrid.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#7da453"));
-                titleText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#ffffff"));
-                _output.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#000000"));
-                _open.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#000000"));
-                start.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#000000"));
-                speedLabel.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#000000"));
-                wordsLabel.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#000000"));
-                nightMode.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#000000"));
-            }
+
+        }
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
+        private void urlButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+       
+        private void recentButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void _tickSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            tickSpeed = Convert.ToInt32(_tickSpeed.Value);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, tickSpeed * 50);
+        }
+
+        private void _numberOfWords_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            numberOfWords = Convert.ToInt32(_numberOfWords.Value);
+        }
+
+        private void _fontSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            _output.FontSize = Convert.ToInt32(_fontSize.Value);
         }
 
         private void nightMode_Click(object sender, RoutedEventArgs e)
         {
-            night = !night;
             ChangeUIColor();
         }
     }
