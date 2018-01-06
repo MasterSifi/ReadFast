@@ -32,6 +32,8 @@ namespace PdfFastReader
         int numberOfWords;
         bool startReader;
         bool night;
+        string save;
+        string[] saveSplit;
         string path;
         string source;
         string[] delimiter = new string[] { " ","  ","   ","\t","\n","\f", "\r", "\v" };
@@ -50,14 +52,24 @@ namespace PdfFastReader
         }
 
         private void OnTimedEvent(object sender, EventArgs e)
-        { 
+        {
+            SaveProgress();
             _output.Text = Read(i);
             i += numberOfWords;
+            
         }
 
+        public  void SaveProgress()
+        {
+          
+                using (StreamWriter outputFile = new StreamWriter(@"K:/save.txt"))
+            {
+                 outputFile.WriteAsync(path+"[space]"+i);
+            }
+        }
         public void PdfToString()
         {
-            i = 0;
+            
             textExtractor = new TextExtractor();
             result = textExtractor.Extract(@path);
             source = result.Text;
@@ -100,7 +112,7 @@ namespace PdfFastReader
                 }
                 else
                 {
-
+                  
                     timer.Start();
                     startButton.Content = "      Stop";
                 }
@@ -185,6 +197,7 @@ namespace PdfFastReader
             if (result == true)
             {
                 path = dlg.FileName;
+                i = 0;
                 PdfToString();
             }
         }
@@ -207,7 +220,12 @@ namespace PdfFastReader
        
         private void recentButton_Click(object sender, RoutedEventArgs e)
         {
-
+        
+            save = File.ReadAllText(@"K:/save.txt");
+            saveSplit = save.Split(new string[] { "[space]" }, StringSplitOptions.None);
+            i = Convert.ToInt32(saveSplit[1]);
+            path = saveSplit[0];
+            PdfToString();
         }
 
         private void _tickSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -229,6 +247,16 @@ namespace PdfFastReader
         private void nightMode_Click(object sender, RoutedEventArgs e)
         {
             ChangeUIColor();
+        }
+
+        private void loadExpander_Expanded(object sender, RoutedEventArgs e)
+        {
+            settingsExpander.IsExpanded = false;
+        }
+
+        private void settingsExpander_Expanded(object sender, RoutedEventArgs e)
+        {
+            loadExpander.IsExpanded = false;
         }
     }
 }

@@ -11,9 +11,14 @@
         <StackPanel x:Name="mainPanel" Height="500" Margin="0,0,1,-8" Orientation="Horizontal">
             <StackPanel Height="500" Width="554" Background="#00000000">
                 <StackPanel x:Name="namePanel" Height="60" Background="#FF4CAF50">
-                    <TextBlock x:Name="nameText" TextWrapping="Wrap" Style="{StaticResource RobotoLight}" Text="ReadFast" Height="58" TextAlignment="Center" FontSize="42" Foreground="#FFFAFAFA" />
+                    <TextBlock x:Name="nameText" TextWrapping="Wrap" Style="{StaticResource RobotoLight}" Height="58" TextAlignment="Center" FontSize="42" Foreground="#FFFAFAFA" ><Run Text="ReadFast"/></TextBlock>
+
                 </StackPanel>
-                <TextBlock x:Name="_output" TextWrapping="Wrap" Style="{StaticResource RobotoRegular}" Height="440" TextAlignment="Center" Background="#00000000"/>
+                <TextBlock x:Name="_output" TextWrapping="Wrap" Style="{StaticResource RobotoRegular}" Height="440" TextAlignment="Center" Background="#00000000"><InlineUIContainer>
+                        <Grid Height="436" Width="554">
+                            <Image HorizontalAlignment="Left" Margin="10,310,0,0" VerticalAlignment="Top" Source="Resources/Images/LogoReadFast.png" Height="116" Width="151" OpacityMask="#99FFFFFF"/>
+                        </Grid>
+                    </InlineUIContainer></TextBlock>
             </StackPanel>
 
             <StackPanel Margin="0,0,0,4" Background="#00000000">
@@ -36,10 +41,16 @@
                 <StackPanel Background="#00000000" >
                     <Button x:Name="startButton" HorizontalAlignment="Stretch" Content="      Start" Click="start_Click" Height="50" FontSize="14.5" />
 
-                    <Expander x:Name="loadExpander" HorizontalAlignment="Stretch" Header="Load" Background="#00000000" >
+                    <Expander x:Name="loadExpander" Expanded="loadExpander_Expanded" HorizontalAlignment="Stretch" Header="Load" Background="#00000000" >
                         <StackPanel>
                             <Button x:Name="loadButton"  HorizontalAlignment="Stretch" Content="      From file" Click="loadButton_Click" Height="40" FontSize="15" />
-
+                            <Expander x:Name="urlExpander" HorizontalAlignment="Stretch" Header="From url" Background="#00000000">
+                                <StackPanel>
+                                    <TextBox Height="30" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"/>
+                                    <Button Height="20" HorizontalAlignment="Stretch" Content="OK"/>
+                                </StackPanel>
+                            </Expander>
+                            <Button x:Name="recentButton" HorizontalAlignment="Center" Content="      Recent" Click="recentButton_Click"  />
 
 
                         </StackPanel>
@@ -47,7 +58,7 @@
 
                     </Expander>
 
-                    <Expander x:Name="settingsExpander" Header="Settings" Background="#00000000">
+                    <Expander x:Name="settingsExpander" Expanded="settingsExpander_Expanded" Header="Settings" Background="#00000000">
                         <StackPanel>
                             <TextBlock x:Name="speedText" Style="{StaticResource RobotoLight}" Text="Speed" HorizontalAlignment="Stretch" TextAlignment="Center"/>
                             <Slider
