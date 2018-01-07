@@ -28,6 +28,7 @@ namespace PdfFastReader
         TextExtractor textExtractor;
         TextExtractionResult result;
         int i;
+        bool isUrl;
         int tickSpeed;
         int numberOfWords;
         bool startReader;
@@ -62,7 +63,7 @@ namespace PdfFastReader
         public  void SaveProgress()
         {
           
-                using (StreamWriter outputFile = new StreamWriter(@"K:/save.txt"))
+                using (StreamWriter outputFile = new StreamWriter(@".\save.txt", false))
             {
                  outputFile.WriteAsync(path+"[space]"+i);
             }
@@ -71,7 +72,15 @@ namespace PdfFastReader
         {
             
             textExtractor = new TextExtractor();
-            result = textExtractor.Extract(@path);
+            if(isUrl)
+            {
+                result = textExtractor.Extract(new Uri(path));
+            }
+            else
+            {
+                result = textExtractor.Extract(path);
+            }
+
             source = result.Text;
             output = result.Text.Split(delimiter, StringSplitOptions.None);
         }
@@ -161,6 +170,9 @@ namespace PdfFastReader
                 maximizeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
                 closeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
                 nameText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                urlText.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                OkButton.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
+                recentButton.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF000000"));
             }
             else
             {
@@ -178,7 +190,9 @@ namespace PdfFastReader
                 maximizeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
                 closeIcon.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
                 nameText.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
-
+                urlText.Background = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FF303030"));
+                OkButton.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
+                recentButton.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#FFFAFAFA"));
             }
         }
 
@@ -198,34 +212,31 @@ namespace PdfFastReader
             {
                 path = dlg.FileName;
                 i = 0;
+                isUrl = false;
                 PdfToString();
             }
         }
 
-        private void saveButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void settingsButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
-        private void urlButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+      
        
         private void recentButton_Click(object sender, RoutedEventArgs e)
         {
-        
-            save = File.ReadAllText(@"K:/save.txt");
-            saveSplit = save.Split(new string[] { "[space]" }, StringSplitOptions.None);
-            i = Convert.ToInt32(saveSplit[1]);
-            path = saveSplit[0];
-            PdfToString();
+            if (File.Exists(@".\save.txt"))
+            {
+                save = File.ReadAllText(@".\save.txt");
+                saveSplit = save.Split(new string[] { "[space]" }, StringSplitOptions.None);
+                i = Convert.ToInt32(saveSplit[1]);
+                path = saveSplit[0];
+                if (path.Contains("http") || path.Contains("https"))
+                {
+                    isUrl = true;
+                }
+                else
+                {
+                    isUrl = false;
+                }
+                PdfToString();
+            }
         }
 
         private void _tickSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -257,6 +268,21 @@ namespace PdfFastReader
         private void settingsExpander_Expanded(object sender, RoutedEventArgs e)
         {
             loadExpander.IsExpanded = false;
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (urlText.Text.Contains("http") || urlText.Text.Contains("https"))
+            {
+                i = 0;
+                path = new Uri(urlText.Text.ToString()).ToString();
+                isUrl = true;
+                PdfToString();
+            }
+            else
+            {
+                MessageBox.Show("Invalid Url.");
+            }
         }
     }
 }

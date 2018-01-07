@@ -39,18 +39,18 @@
                     </Grid>
                 </StackPanel>
                 <StackPanel Background="#00000000" >
-                    <Button x:Name="startButton" HorizontalAlignment="Stretch" Content="      Start" Click="start_Click" Height="50" FontSize="14.5" />
+                    <Button x:Name="startButton" HorizontalAlignment="Stretch" Content="      Start" Click="start_Click" Height="50" FontSize="15" />
 
                     <Expander x:Name="loadExpander" Expanded="loadExpander_Expanded" HorizontalAlignment="Stretch" Header="Load" Background="#00000000" >
                         <StackPanel>
                             <Button x:Name="loadButton"  HorizontalAlignment="Stretch" Content="      From file" Click="loadButton_Click" Height="40" FontSize="15" />
                             <Expander x:Name="urlExpander" HorizontalAlignment="Stretch" Header="From url" Background="#00000000">
                                 <StackPanel>
-                                    <TextBox Height="30" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"/>
-                                    <Button Height="20" HorizontalAlignment="Stretch" Content="OK"/>
+                                    <TextBox x:Name="urlText" Height="30" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch"/>
+                                    <Button x:Name="OkButton" Height="20" Style="{StaticResource OKButton}" HorizontalAlignment="Stretch" Content="OK" Click="OkButton_Click"/>
                                 </StackPanel>
                             </Expander>
-                            <Button x:Name="recentButton" HorizontalAlignment="Center" Content="      Recent" Click="recentButton_Click"  />
+                            <Button x:Name="recentButton" Height="40" HorizontalAlignment="Stretch" Content="      Recent" Click="recentButton_Click"  FontSize="15"/>
 
 
                         </StackPanel>

@@ -239,7 +239,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\LogoReadFast.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\IconReadFast.ico" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Saved\saved.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
